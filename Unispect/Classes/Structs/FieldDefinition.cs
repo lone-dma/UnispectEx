@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using MahApps.Metro.Converters;
 
 namespace Unispect
@@ -30,31 +31,13 @@ namespace Unispect
         private string GetName()
         {
             if (NamePtr < 0x10000000 || Offset > 0x2000)
+                return "<ErrorReadingField_OutOfRange>";
+
+            byte[] buffer = Memory.Read(NamePtr, 1024);
+            if (buffer == null)
                 return "<ErrorReadingField>";
 
-            var b = Memory.Read(NamePtr, 1024);
-
-            if (b == null)
-                return "<ErrorReadingField>";
-
-            var code = b[0];
-            if (code < 32 || code > 126) // If non-printable Ascii
-            {
-                var fieldType = GetFieldTypeString();
-                if (fieldType == null)
-                    return "<ErrorReadingField>";
-
-                var dotIndex = fieldType.LastIndexOf('.') + 1;
-                var subType = dotIndex >= 0
-                    ? fieldType.Substring(dotIndex)
-                    : fieldType;
-
-                return $"{subType.LowerChar().FormatFieldText()}" +
-                       $"_0x{Offset:X2}";
-            }
-
-            var str = b.ToAsciiString();
-            return str;
+            return buffer.ReadName();
         }
 
         public override string ToString()

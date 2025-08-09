@@ -89,6 +89,9 @@ namespace Unispect
                 Log.Add("Propogating types and fields");
                 PropogateTypes();
 
+                Log.Add("Fixing type hierarchy");
+                FixTypeHierarchy();
+
                 // If this is true, then the user does not want to save to file
                 if (!string.IsNullOrWhiteSpace(fileName))
                 {
@@ -147,7 +150,7 @@ namespace Unispect
         {
             var typeDefWrappers = new List<TypeDefWrapper>();
             var progressIncrement = 1f / _typeDefinitions.Count * 3f;
-            foreach (var t in _typeDefinitions.AsParallel())
+            foreach (var t in _typeDefinitions)
             {
                 ProgressTotal += progressIncrement;
 
@@ -158,6 +161,12 @@ namespace Unispect
             Log.Add("Sorting type definitions by path");
 
             TypeDefinitions = new List<TypeDefWrapper>(typeDefWrappers.OrderBy(wrapper => wrapper.FullName));
+        }
+
+        private void FixTypeHierarchy()
+        {
+            foreach (var typeDef in TypeDefinitions)
+                typeDef.FixHierarchy(TypeDefinitions);
         }
 
         public void DumpToFile(string fileName, bool verbose = true, List<TypeDefWrapper> tdlToDump = null)
@@ -198,7 +207,7 @@ namespace Unispect
                     var parent = typeDef.Parent;
                     if (parent != null)
                     {
-                        sb.Append($" : {parent.Name}");
+                        sb.Append($" : {parent.FullName}");
                         var interfaceList = typeDef.Interfaces;
                         if (interfaceList.Count > 0)
                         {
@@ -236,7 +245,7 @@ namespace Unispect
 
         private ConcurrentDictionary<ulong, TypeDefinition> GetRemoteTypeDefinitions(ulong monoImageAddress)
         {
-            var classCache = _memory.Read<InternalHashTable>(monoImageAddress + (uint)Offsets.ImageClassCache);
+            var classCache = _memory.Read<InternalHashTable>(monoImageAddress + Offsets.ImageClassCache);
             var typeDefs = new Dictionary<ulong, TypeDefinition>();
 
             Log.Add($"Processing {classCache.Size} classes. This may take some time.");
@@ -253,7 +262,7 @@ namespace Unispect
 
                 for (var d = _memory.Read<ulong>(classCache.Table + i * 8);
                     d != 0;
-                    d = _memory.Read<ulong>(d + (uint)Offsets.ClassNextClassCache))
+                    d = _memory.Read<ulong>(d + Offsets.ClassNextClassCache))
                 {
                     var typeDef = _memory.Read<TypeDefinition>(d);
                     typeDefs.Add(d, typeDef);
@@ -270,7 +279,7 @@ namespace Unispect
 
             var domain = _memory.Read<ulong>(domainAddress);
 
-            var assemblyArrayAddress = _memory.Read<ulong>(domain + (uint)Offsets.DomainDomainAssemblies);
+            var assemblyArrayAddress = _memory.Read<ulong>(domain + Offsets.DomainDomainAssemblies);
             for (var assemblyAddress = assemblyArrayAddress;
                 assemblyAddress != 0;
                 assemblyAddress = _memory.Read<ulong>(assemblyAddress + 0x8))
@@ -281,7 +290,7 @@ namespace Unispect
                 if (assemblyName != name)
                     continue;
 
-                return _memory.Read<ulong>(assembly + (uint)Offsets.AssemblyImage);
+                return _memory.Read<ulong>(assembly + Offsets.AssemblyImage);
             }
 
             throw new InvalidOperationException($"Unable to find assembly '{name}'");

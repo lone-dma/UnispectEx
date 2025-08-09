@@ -37,7 +37,7 @@ namespace Unispect
             if (ManagedProcessHandle == null) throw new Exception("Not currently attached to a process.");
 
             ProcessModule resultModule = null;
-            foreach (ProcessModule pm in ManagedProcessHandle.Modules.AsParallel())
+            foreach (ProcessModule pm in ManagedProcessHandle.Modules)
             {
                 if (pm.ModuleName.EndsWith(moduleName))
                 {

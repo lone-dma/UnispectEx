@@ -37,18 +37,13 @@ namespace Unispect
             }
         }
 
-        public static string ToUnknownClassString(this byte[] _, UnknownPrefix prefix, uint token)
+        public static ushort UTF8ToUTF16(this string val)
         {
-            var hash = (token - 0x2000000) * (uint)prefix;
-            if (UnknownClassNameCache.ContainsKey(hash))
-                return UnknownClassNameCache[hash];
+            byte[] utf16Bytes = Encoding.Unicode.GetBytes(val);
+            if (utf16Bytes.Length < 2)
+                throw new ArgumentException("Input string is too short.", nameof(val));
 
-            var prefixName = Enum.GetName(typeof(UnknownPrefix), prefix);
-            //var str = $"{prefixName}{PrefixIndexer[prefixName ?? throw new InvalidOperationException()]++:0000}";
-            var str = $"{prefixName}{hash:X4}";
-            UnknownClassNameCache.Add(hash, str);
-
-            return str;
+            return BitConverter.ToUInt16(utf16Bytes, 0);
         }
 
         public static string GetSimpleTypeKeyword(this string text)
@@ -86,6 +81,23 @@ namespace Unispect
             for (var i = fromInclusive; i < toExclusive; i += step)
             {
                 yield return i;
+            }
+        }
+
+        public static string ReadName(this byte[] buffer)
+        {
+            if (buffer[0] >= 0xE0)
+            {
+                var nullIndex = Array.IndexOf(buffer, (byte)0);
+                if (nullIndex >= 0) Array.Resize(ref buffer, nullIndex);
+                var value = Encoding.UTF8.GetString(buffer);
+                return $"\\u{value.UTF8ToUTF16():X4}";
+            }
+            else
+            {
+                var nullIndex = Array.IndexOf(buffer, (byte)0);
+                if (nullIndex >= 0) Array.Resize(ref buffer, nullIndex);
+                return Encoding.UTF8.GetString(buffer);
             }
         }
 

@@ -199,46 +199,24 @@ namespace Unispect
 
         private string GetName()
         {
-            if (NamePtr == 0)
-                return "<NoName>";
+            if (NamePtr == 0x0)
+                return "<UnknownName>";
 
-            var b = Memory.Read(NamePtr, 1024);
-            var code = b[0];
-            if (code >= 0xE0)
-            {
-                var prefix = UnknownPrefix.GClass;
-
-                if (IsEnum)
-                    prefix = UnknownPrefix.GEnum;
-                else if (IsValueType)
-                    prefix = UnknownPrefix.GStruct;
-                else if (IsInterface)
-                    prefix = UnknownPrefix.GInterface;
-
-                var unkTypeStr = b.ToUnknownClassString(prefix, TypeToken);
-                return unkTypeStr;
-                // Todo: add support for more general obfuscated names
-                //Valid Names Match = @"^[a-zA-Z_<{$][a-zA-Z_0-9<>{}$.`-]*$"
-            }
-
-            var str = b.ToAsciiString();
-            return str;
+            byte[] buffer = Memory.Read(NamePtr, 1024);
+            return buffer.ReadName();
         }
 
 
         private string GetNamespace()
         {
             if (NamespacePtr == 0)
-                return "<NoNamespace>";
+                return "<UnknownNamespace>";
 
-            var b = Memory.Read(NamespacePtr, 1024);
-
-            if (b[0] == 0)
+            byte[] buffer = Memory.Read(NamespacePtr, 1024);
+            if (buffer[0] == 0)
                 return "-";
 
-            var str = b.ToAsciiString();
-
-            return str;
+            return buffer.ReadName();
         }
 
         public override string ToString()

@@ -200,6 +200,41 @@ namespace Unispect
 
             return sb.ToString();
         }
+
+        private bool ShouldAddParentType(FieldDefWrapper newField)
+        {
+            foreach (var f in Fields)
+            {
+                if (f.Name == newField.Name && f.FieldType == newField.FieldType)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public void FixHierarchy(List<TypeDefWrapper> defs)
+        {
+            if (Parent == null)
+                return;
+
+            foreach (var def in defs)
+            {
+                if (def.FullName == Parent.FullName)
+                {
+                    var merge = new List<FieldDefWrapper>();
+                    foreach (var field in def.Fields)
+                    {
+                        if (ShouldAddParentType(field))
+                            merge.Add(field);
+                    }
+
+                    Fields.AddRange(merge);
+                    Fields.Sort((x, y) => x.Offset.CompareTo(y.Offset));
+
+                    break;
+                }
+            }
+        }
         #endregion
     }
 }
