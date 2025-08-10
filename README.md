@@ -1,4 +1,9 @@
 # UnispectEx
+
+# What's new in this fork
+- Support for Unity 2022
+- .NET9 Support
+
 ![unispect](https://github.com/EVO-DMA/UnispectEx/blob/main/Gallery/unispect-header.png?raw=true)
  
 Unispect is a mono type definition and field inspector targeting Unity games compiled with mono.
