@@ -157,9 +157,7 @@ namespace Unispect
         {
             get
             {
-                var assembly = Assembly.GetExecutingAssembly();
-                var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-                return fileVersionInfo.ProductVersion;
+                return Assembly.GetEntryAssembly().GetName().Version.ToString();
             }
         }
 

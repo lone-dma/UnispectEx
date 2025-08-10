@@ -132,7 +132,7 @@ namespace Unispect
                 CbDropType.SelectedIndex = _settings.TryGetValue("DropTypeIndex", out var dropTypeIndex)
                     ? int.Parse(dropTypeIndex)
                     : 0;
-
+                Log.Add("Settings Loaded!");
             }
             catch (Exception ex)
             {

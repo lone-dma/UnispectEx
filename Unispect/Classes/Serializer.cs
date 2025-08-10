@@ -13,7 +13,9 @@ namespace Unispect
             {
                 using (Stream stream = File.Open(filePath, FileMode.Create))
                 {
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
                     var bin = new BinaryFormatter();
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
                     bin.Serialize(stream, objectToSerialize);
                 }
             }
@@ -30,7 +32,9 @@ namespace Unispect
                 using (Stream fileStream = File.Open(filePath, FileMode.Create))
                 using (var compressedStream = new GZipStream(fileStream, CompressionMode.Compress))
                 {
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
                     var bin = new BinaryFormatter();
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
                     bin.Serialize(compressedStream, objectToSerialize);
                 }
             }
@@ -47,7 +51,9 @@ namespace Unispect
             {
                 using (Stream stream = File.Open(filePath, FileMode.Open))
                 {
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
                     var bin = new BinaryFormatter();
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
                     result = (T)bin.Deserialize(stream);
                 }
             }
@@ -66,7 +72,9 @@ namespace Unispect
                 using (Stream fileStream = File.Open(filePath, FileMode.Open)) 
                 using (var decompressStream = new GZipStream(fileStream, CompressionMode.Decompress))
                 {
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
                     var bin = new BinaryFormatter();
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
                     result = (T)bin.Deserialize(decompressStream);
                 }
             }

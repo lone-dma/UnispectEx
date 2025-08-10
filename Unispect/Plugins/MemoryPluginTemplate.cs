@@ -18,7 +18,7 @@ namespace MyMemoryNameSpace
         {
             // This method is only used to get the base address and size in memory of 'moduleName' (mono-2.0-bdwgc.dll by default)
             // The inspector target is obtained by using that module.
-            
+
             throw new NotImplementedException();
             var baseAddress = 0ul;
             var size = 0x00767000;
@@ -45,7 +45,7 @@ namespace MyMemoryNameSpace
             // -so you could remove the IntPtr constructor.
             // Marshal.Copy(bytePtr, buffer, 0, size) 
             throw new NotImplementedException();
-        } 
+        }
 
         public override void Dispose()
         {
