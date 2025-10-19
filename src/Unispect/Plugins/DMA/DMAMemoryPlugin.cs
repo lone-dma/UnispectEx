@@ -23,10 +23,28 @@ namespace Unispect.Plugins.DMA
                 if (File.Exists(MemMapPath))
                 {
                     Log.Add("[DMA] Memory Map Found!");
-                    _vmm = new Vmm("-device", "FPGA", "-memmap", MemMapPath, "-waitinitialize");
+                    _vmm = new Vmm("-device", "FPGA", "-memmap", MemMapPath, "-waitinitialize")
+                    {
+                        EnableMemoryWriting = false
+                    };
                 }
                 else
-                    _vmm = new Vmm("-device", "FPGA", "-waitinitialize");
+                {
+                    _vmm = new Vmm("-device", "FPGA", "-waitinitialize")
+                    {
+                        EnableMemoryWriting = false
+                    };
+                    try
+                    {
+                        _vmm.GetMemoryMap(
+                            applyMap: true, 
+                            outputFile: MemMapPath);
+                    }
+                    catch
+                    {
+                        // Best effort memory map
+                    }
+                }
                 Log.Add("[DMA] Plugin Loaded!");
             }
             catch (Exception ex)
