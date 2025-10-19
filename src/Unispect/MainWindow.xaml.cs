@@ -16,6 +16,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using Unispect.Plugins;
 using MenuItem = System.Windows.Controls.MenuItem;
 
 

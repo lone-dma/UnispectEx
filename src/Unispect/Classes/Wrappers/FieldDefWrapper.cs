@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Unispect.Plugins;
 
 namespace Unispect
 {

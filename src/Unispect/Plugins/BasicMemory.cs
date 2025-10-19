@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace Unispect
+namespace Unispect.Plugins
 {
     [UnispectPlugin]
     public sealed class BasicMemory : MemoryProxy
