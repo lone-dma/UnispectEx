@@ -21,7 +21,7 @@ jobs:
         with:
           dotnet-version: "9.0.x"
 
-      - name: Publish Unispect
+      - name: Dotnet Publish
         run: |
           dotnet publish src/Unispect/Unispect.csproj \
             -c Release \
@@ -31,16 +31,6 @@ jobs:
             /p:DebugType=none \
             /p:EnableWindowsTargeting=true \
             -o out
-
-      - name: Publish DMA Plugin
-        run: |
-          dotnet publish src/UnispectDMAPlugin/UnispectDMAPlugin.csproj \
-            -c Release \
-            -r win-x64 \
-            --no-self-contained \
-            /p:DebugType=none \
-            /p:EnableWindowsTargeting=true \
-            -o out/Plugins
 
       - name: Archive publish output
         run: |
