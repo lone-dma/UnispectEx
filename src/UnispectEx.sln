@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11111.16 d18.0
+VisualStudioVersion = 18.0.11111.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unispect", "Unispect\Unispect.csproj", "{4143EC42-AF92-4C46-BF20-17858A1F6BD8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnispectDMAPlugin", "UnispectDmaPlugin\UnispectDMAPlugin.csproj", "{B5E97671-6F6A-D3B2-25D1-F086A606E6AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{4143EC42-AF92-4C46-BF20-17858A1F6BD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4143EC42-AF92-4C46-BF20-17858A1F6BD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4143EC42-AF92-4C46-BF20-17858A1F6BD8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B5E97671-6F6A-D3B2-25D1-F086A606E6AF}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{B5E97671-6F6A-D3B2-25D1-F086A606E6AF}.Debug|Any CPU.Build.0 = Debug|x64
-		{B5E97671-6F6A-D3B2-25D1-F086A606E6AF}.Release|Any CPU.ActiveCfg = Release|x64
-		{B5E97671-6F6A-D3B2-25D1-F086A606E6AF}.Release|Any CPU.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

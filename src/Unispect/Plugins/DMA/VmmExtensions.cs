@@ -1,9 +1,9 @@
 ﻿using System;
 using VmmSharpEx;
 
-namespace unispectDMAPlugin
+namespace Unispect.Plugins.DMA
 {
-    internal static class Extensions
+    internal static class VmmExtensions
     {
         /// <summary>
         /// Custom Memory Read Method.

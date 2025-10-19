@@ -654,19 +654,39 @@ namespace Unispect
             }
         }
 
-        public List<Type> LoadPlugins()
+        private static List<Type> LoadPlugins()
         {
             // We will reload the list of assemblies each time just in case there are changes.
             var retList = new List<Type>();
+
+            // Get hardcoded plugins first
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                try
+                {
+                    // Skip dynamic assemblies
+                    if (assembly.IsDynamic)
+                        continue;
+
+                    foreach (var type in assembly.GetTypes())
+                    {
+                        if (type.IsDefined(typeof(UnispectPluginAttribute), inherit: true))
+                        {
+                            retList.Add(type);
+                        }
+                    }
+                }
+                catch
+                {
+                    // Handle assembly load errors ¯\_(ツ)_/¯
+                }
+            }
 
             var pluginPath = Directory.GetCurrentDirectory() + "\\Plugins\\";
             if (!Directory.Exists(pluginPath))
                 Directory.CreateDirectory(pluginPath);
 
             //Log.Add($"Searching for plug-ins in: {pluginPath}");
-
-            // We will add our BasicMemory class here as an option as well.
-            retList.Add(typeof(BasicMemory));
 
             // Search all sub directories, just in case the user decides to group their library with it's potential additional resources.
             foreach (var fileName in Directory.GetFiles(pluginPath, "*.dll", SearchOption.AllDirectories))

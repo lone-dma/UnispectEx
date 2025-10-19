@@ -1,12 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Versioning;
-using Unispect;
 using VmmSharpEx;
 
 [assembly: SupportedOSPlatform("Windows")]
 
-namespace unispectDMAPlugin
+namespace Unispect.Plugins.DMA
 {
     [UnispectPlugin]
     public sealed class DMAMemoryPlugin : MemoryProxy
@@ -31,7 +30,7 @@ namespace unispectDMAPlugin
             }
             catch (Exception ex)
             {
-                throw new DMAMemoryPluginException("[DMA] ERROR Initializing FPGA", ex);
+                throw new InvalidOperationException("[DMA] ERROR Initializing FPGA", ex);
             }
         }
 
@@ -47,7 +46,7 @@ namespace unispectDMAPlugin
             }
             catch (Exception ex)
             {
-                throw new DMAMemoryPluginException($"[DMA] ERROR retrieving module '{moduleName}'", ex);
+                throw new InvalidOperationException($"[DMA] ERROR retrieving module '{moduleName}'", ex);
             }
         }
 
@@ -66,7 +65,7 @@ namespace unispectDMAPlugin
             }
             catch (Exception ex)
             {
-                throw new DMAMemoryPluginException($"[DMA] ERROR attaching to process '{handle}'", ex);
+                throw new InvalidOperationException($"[DMA] ERROR attaching to process '{handle}'", ex);
             }
         }
 
@@ -78,7 +77,7 @@ namespace unispectDMAPlugin
             }
             catch (Exception ex)
             {
-                throw new DMAMemoryPluginException($"[DMA] ERROR Reading {length} bytes at 0x{address.ToString("X")}", ex);
+                throw new InvalidOperationException($"[DMA] ERROR Reading {length} bytes at 0x{address.ToString("X")}", ex);
             }
         }
 

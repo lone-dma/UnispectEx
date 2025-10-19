@@ -13,6 +13,8 @@
 	
   <PropertyGroup>
     <ApplicationIcon>unispect.ico</ApplicationIcon>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <Nullable>warnings</Nullable>
   </PropertyGroup>
 	
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -24,6 +26,14 @@
   </PropertyGroup>
 	
   <ItemGroup>
+    <Compile Remove="Plugins\MemoryPluginTemplate.cs" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <None Include="Plugins\MemoryPluginTemplate.cs" />
+  </ItemGroup>
+	
+  <ItemGroup>
     <Resource Include="unispect.ico" />
   </ItemGroup>
 	
@@ -33,6 +43,7 @@
     <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.3.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="9.0.8" />
+    <PackageReference Include="VmmSharpEx" Version="3.80.9422.367" />
   </ItemGroup>
 	
 </Project>
