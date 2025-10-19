@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Versioning;
+using System.Threading;
 using VmmSharpEx;
 
 [assembly: SupportedOSPlatform("Windows")]
@@ -81,17 +82,15 @@ namespace Unispect.Plugins.DMA
             }
         }
 
-        #region IDisposable
+
         private bool _disposed;
         public override void Dispose()
         {
-            if (!_disposed)
+            if (Interlocked.Exchange(ref _disposed, true) == false)
             {
                 Log.Add("[DMA] Dispose");
                 _vmm.Dispose();
-                _disposed = true;
             }
         }
-        #endregion
     }
 }
