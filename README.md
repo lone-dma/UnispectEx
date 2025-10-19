@@ -4,7 +4,7 @@
 - Support for Unity 2022
 - .NET9 Support
 
-![unispect](https://github.com/EVO-DMA/UnispectEx/blob/main/Gallery/unispect-header.png?raw=true)
+![unispect](Gallery/unispect-header.png?raw=true)
  
 Unispect is a mono type definition and field inspector targeting Unity games compiled with mono.
 It does so by accessing the remote process's memory.
@@ -12,7 +12,7 @@ It does so by accessing the remote process's memory.
 The design choice of accessing the process memory to gather the definitions was made with the intention 
 of being able to access the run-time type definitions as well as accurate field definition information.
 
-![Screenshot1](https://github.com/EVO-DMA/UnispectEx/blob/main/Gallery/screenshot1.png?raw=true)
+![Screenshot1](Gallery/screenshot1.png?raw=true)
 
 # Features
 
@@ -53,7 +53,7 @@ Field Definition output:
 BehaviourMachine.ObjectRandom->m_Branch // Offset: 0x0018 (Type: BehaviourMachine.BranchNode)
 ```
 
-![Screenshot2](https://github.com/EVO-DMA/UnispectEx/blob/main/Gallery/screenshot2.png?raw=true)
+![Screenshot2](Gallery/screenshot2.png?raw=true)
 
 Planned features (these aren't definite, but likely):
   - The ability to drag desired type hierarchies into a project view
@@ -112,4 +112,4 @@ Planned features (these aren't definite, but likely):
   - Compile the class library and place the .dll into Unispect's plugins folder (Unispect\Plugins\)
   - Open Unispect and click "Load Plugin". Look for your class name and then select it by clicking on it.
   
-![Screenshot1](https://github.com/EVO-DMA/UnispectEx/blob/main/Gallery/screenshot3.png?raw=true)
+![Screenshot1](Gallery/screenshot3.png?raw=true)
