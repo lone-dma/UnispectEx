@@ -719,11 +719,12 @@ namespace UnispectEx
         {
             foreach (var type in asm.GetTypes())
             {
-                if (!type.IsPublic || type.DeclaringType != null) // skip non-public and nested types
-                    continue;
-                if (type.IsAbstract || type.IsInterface) // concrete types only
-                    continue;
-                if (typeof(IUnispectExPlugin).IsAssignableFrom(type))
+                // Check for public, non-nested, non-abstract classes that implement IUnispectExPlugin
+                if (type.IsPublic && 
+                    type.DeclaringType == null && 
+                    !type.IsAbstract && 
+                    !type.IsInterface && 
+                    typeof(IUnispectExPlugin).IsAssignableFrom(type))
                 {
                     results.Add(type);
                 }
