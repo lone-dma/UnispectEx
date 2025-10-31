@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using UnispectEx.Memory;
 
-namespace Unispect
+namespace UnispectEx
 {
     [Serializable]
     [StructLayout(LayoutKind.Explicit)]
@@ -259,6 +260,6 @@ namespace Unispect
             return ret;
         }
 
-        public static MemoryProxy Memory => MemoryProxy.Instance;
+        private static MemoryProxy Memory => MemoryProxy.Instance;
     }
 }

@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:unispect="clr-namespace:Unispect"
-        x:Class="Unispect.MainWindow"
+        xmlns:unispect="clr-namespace:UnispectEx"
+        x:Class="UnispectEx.MainWindow"
         mc:Ignorable="d"
         Title="Unispect - Mono Type Dumper" Height="350" Width="800" ResizeMode="CanMinimize" 
         Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">

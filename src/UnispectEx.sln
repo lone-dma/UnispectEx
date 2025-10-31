@@ -5,6 +5,8 @@ VisualStudioVersion = 18.0.11111.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnispectEx", "UnispectEx\UnispectEx.csproj", "{4143EC42-AF92-4C46-BF20-17858A1F6BD8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnispectEx.Plugins", "UnispectEx.Plugins\UnispectEx.Plugins.csproj", "{D05662CB-47A6-455A-A752-D8BA2A290474}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4143EC42-AF92-4C46-BF20-17858A1F6BD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4143EC42-AF92-4C46-BF20-17858A1F6BD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4143EC42-AF92-4C46-BF20-17858A1F6BD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D05662CB-47A6-455A-A752-D8BA2A290474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D05662CB-47A6-455A-A752-D8BA2A290474}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D05662CB-47A6-455A-A752-D8BA2A290474}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D05662CB-47A6-455A-A752-D8BA2A290474}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

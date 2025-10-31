@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Unispect
+namespace UnispectEx
 {
     [Serializable]
     public struct MonoType // MonoType

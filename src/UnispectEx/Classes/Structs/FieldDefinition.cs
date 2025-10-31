@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Text;
-using MahApps.Metro.Converters;
+using UnispectEx.Memory;
 
-namespace Unispect
+namespace UnispectEx
 {
     [Serializable]
     [StructLayout(LayoutKind.Sequential, Size = 32)]
@@ -129,7 +128,7 @@ namespace Unispect
 
             for (uint i = 0; i < paramCount && i < MonoGenericInstance.MaxParams; i++)
             {
-                var subType = MemoryProxy.Instance.Read<MonoType>(monoGenericInst.MonoTypes[i]);
+                var subType = MemoryProxy.Instance.Read<MonoType>(monoGenericInst.GetType(i));
                 var subTypeCode = subType.TypeCode;
 
                 switch (subTypeCode)
@@ -176,6 +175,6 @@ namespace Unispect
             return null;
         }
 
-        public static MemoryProxy Memory => MemoryProxy.Instance;
+        private static MemoryProxy Memory => MemoryProxy.Instance;
     }
 }

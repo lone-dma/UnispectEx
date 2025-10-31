@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Unispect.Plugins;
+using UnispectEx.Memory;
 
-namespace Unispect
+namespace UnispectEx
 {
     [Serializable]
     public class FieldDefWrapper

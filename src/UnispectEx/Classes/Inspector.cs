@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnispectEx.Memory;
+using UnispectEx.Plugins;
 
-namespace Unispect
+namespace UnispectEx
 {
     // Todo add support for il2cpp ?
     [Serializable]
@@ -45,7 +47,7 @@ namespace Unispect
             string moduleToDump = "Assembly-CSharp")
         {
             Log.Add($"Initializing memory proxy of type '{memoryProxyType.Name}'");
-            using (_memory = (MemoryProxy)Activator.CreateInstance(memoryProxyType))
+            using (_memory = MemoryProxy.Create(memoryProxyType))
             {
                 ProgressTotal += 0.16f;
 
@@ -53,7 +55,7 @@ namespace Unispect
                 var success = _memory.AttachToProcess(processHandle);
 
                 if (!success)
-                    throw new Exception("Could not attach to the remote process.");
+                    throw new InvalidOperationException("Could not attach to the remote process.");
 
                 ProgressTotal += 0.16f;
 
@@ -122,7 +124,7 @@ namespace Unispect
             Serializer.Save($"TypeDbs\\{fileName.SanitizeFileName().ToLower()}", TypeDefinitions);
         }
 
-        private ModuleProxy GetMonoModule(out string moduleName)
+        private ModuleInfo GetMonoModule(out string moduleName)
         {
             //Log.Add("Looking for the mono module (mono, mono-2.0-bdwgc)");
             Log.Add("Looking for the mono module (mono-2.0-bdwgc)");
@@ -296,7 +298,7 @@ namespace Unispect
             throw new InvalidOperationException($"Unable to find assembly '{name}'");
         }
 
-        private static ulong GetRootDomainFunctionAddress(byte[] moduleDump, ModuleProxy monoModuleInfo)
+        private static ulong GetRootDomainFunctionAddress(byte[] moduleDump, ModuleInfo monoModuleInfo)
         {
             // Traverse the PE header to get mono_get_root_domain
             var startIndex = moduleDump.ToInt32(Offsets.ImageDosHeaderELfanew);

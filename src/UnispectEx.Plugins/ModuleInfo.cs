@@ -1,12 +1,12 @@
-﻿namespace Unispect
+﻿namespace UnispectEx.Plugins
 {
-    public class ModuleProxy
+    public sealed class ModuleInfo
     {
         public string Name { get; }
         public ulong BaseAddress { get; }
         public int Size { get; } 
 
-        public ModuleProxy(string name, ulong baseAddress, int size)
+        public ModuleInfo(string name, ulong baseAddress, int size)
         {
             Name = name;
             BaseAddress = baseAddress;

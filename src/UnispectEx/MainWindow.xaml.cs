@@ -3,10 +3,10 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -16,11 +16,12 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using Unispect.Plugins;
+using UnispectEx.Memory;
+using UnispectEx.Plugins;
 using MenuItem = System.Windows.Controls.MenuItem;
 
 
-namespace Unispect
+namespace UnispectEx
 {
     public sealed partial class MainWindow
     {
@@ -657,71 +658,71 @@ namespace Unispect
 
         private static List<Type> LoadPlugins()
         {
-            // We will reload the list of assemblies each time just in case there are changes.
             var retList = new List<Type>();
-
-            // Get hardcoded plugins first
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            try
             {
-                try
-                {
-                    // Skip dynamic assemblies
-                    if (assembly.IsDynamic)
-                        continue;
+                // We will reload the list of assemblies each time just in case there are changes.
 
-                    foreach (var type in assembly.GetTypes())
+                // Get hardcoded plugins first
+                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    try
                     {
-                        if (type.IsDefined(typeof(UnispectPluginAttribute), inherit: true))
+                        // Skip dynamic assemblies
+                        if (assembly.IsDynamic)
+                            continue;
+
+                        foreach (var type in assembly.GetTypes())
                         {
-                            retList.Add(type);
+                            if (typeof(IUnispectExPlugin).IsAssignableFrom(type) && type != typeof(IUnispectExPlugin))
+                            {
+                                retList.Add(type);
+                            }
                         }
                     }
-                }
-                catch
-                {
-                    // Handle assembly load errors ¯\_(ツ)_/¯
-                }
-            }
-
-            var pluginPath = Directory.GetCurrentDirectory() + "\\Plugins\\";
-            if (!Directory.Exists(pluginPath))
-                Directory.CreateDirectory(pluginPath);
-
-            //Log.Add($"Searching for plug-ins in: {pluginPath}");
-
-            // Search all sub directories, just in case the user decides to group their library with it's potential additional resources.
-            foreach (var fileName in Directory.GetFiles(pluginPath, "*.dll", SearchOption.AllDirectories))
-            {
-                try
-                {
-                    var assembly = Assembly.LoadFrom(fileName);
-
-                    // We will grab the first type found marked with our custom attribute.
-                    var targetClass = assembly.GetTypes().FirstOrDefault(type =>
-                        type.GetCustomAttributes(typeof(UnispectPluginAttribute), true).Length > 0);
-
-                    if (targetClass == null)
+                    catch
                     {
-                        Log.Warn(
-                            $"{Path.GetFileName(fileName)} does not contain any classes with the UnispectPlugin attribute.");
-                        continue;
+                        // Handle assembly load errors ¯\_(ツ)_/¯
                     }
+                }
 
-                    retList.Add(targetClass);
-                }
-                catch (ReflectionTypeLoadException ex)
+                var pluginPath = Directory.GetCurrentDirectory() + "\\Plugins\\";
+                if (!Directory.Exists(pluginPath))
+                    Directory.CreateDirectory(pluginPath);
+
+                //Log.Add($"Searching for plug-ins in: {pluginPath}");
+
+                // Search all sub directories, just in case the user decides to group their library with it's potential additional resources.
+                foreach (var fileName in Directory.GetFiles(pluginPath, "*.dll", SearchOption.AllDirectories))
                 {
-                    Log.Exception($"{Path.GetFileName(fileName)}: The plugin definitions were not implemented correctly.", ex);
-                }
-                catch (Exception ex)
-                {
-                    Log.Exception($"Error loading: {Path.GetFileName(fileName)}.", ex);
+                    try
+                    {
+                        var assembly = Assembly.LoadFrom(fileName);
+
+                        foreach (var type in assembly.GetTypes())
+                        {
+                            if (typeof(IUnispectExPlugin).IsAssignableFrom(type) && type != typeof(IUnispectExPlugin))
+                            {
+                                retList.Add(type);
+                            }
+                        }
+                    }
+                    catch (ReflectionTypeLoadException ex)
+                    {
+                        Log.Exception($"{Path.GetFileName(fileName)}: The plugin definitions were not implemented correctly.", ex);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Exception($"Error loading: {Path.GetFileName(fileName)}.", ex);
+                    }
                 }
             }
-
+            catch (Exception ex)
+            {
+                Log.Exception($"Error loading plugins", ex);
+            }
             return retList;
         }
-
 
         public class OffsetChainInfo
         {

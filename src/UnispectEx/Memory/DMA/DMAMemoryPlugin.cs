@@ -2,14 +2,14 @@
 using System.IO;
 using System.Runtime.Versioning;
 using System.Threading;
+using UnispectEx.Plugins;
 using VmmSharpEx;
 
 [assembly: SupportedOSPlatform("Windows")]
 
-namespace Unispect.Plugins.DMA
+namespace UnispectEx.Memory.DMA
 {
-    [UnispectPlugin]
-    public sealed class DMAMemoryPlugin : MemoryProxy
+    public sealed class DMAMemoryPlugin : IUnispectExPlugin
     {
         private const string MemMapPath = "mmap.txt";
         private readonly Vmm _vmm;
@@ -53,7 +53,7 @@ namespace Unispect.Plugins.DMA
             }
         }
 
-        public override ModuleProxy GetModule(string moduleName)
+        public ModuleInfo GetModule(string moduleName)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace Unispect.Plugins.DMA
                 if (!_vmm.Map_GetModuleFromName(_pid, moduleName, out var module))
                     throw new InvalidOperationException("Module not found!");
                 Log.Add($"[DMA] Module Found: '{module.sText}' | Base: 0x{module.vaBase.ToString("X")} | Size: {module.cbImageSize}");
-                return new ModuleProxy(moduleName, module.vaBase, (int)module.cbImageSize);
+                return new ModuleInfo(moduleName, module.vaBase, (int)module.cbImageSize);
             }
             catch (Exception ex)
             {
@@ -69,7 +69,7 @@ namespace Unispect.Plugins.DMA
             }
         }
 
-        public override bool AttachToProcess(string handle)
+        public bool AttachToProcess(string handle)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace Unispect.Plugins.DMA
                 // Slightly differs from Unispect's default Memory Plugin.
                 // Use 'ProcessName.exe' instead of 'ProcessName'.
                 if (!_vmm.PidGetFromName(handle, out uint pid))
-                    throw new Exception("Process not found!");
+                    throw new InvalidOperationException("Process not found!");
                 _pid = pid;
                 return true;
 
@@ -88,7 +88,7 @@ namespace Unispect.Plugins.DMA
             }
         }
 
-        public override byte[] Read(ulong address, int length)
+        public byte[] Read(ulong address, int length)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace Unispect.Plugins.DMA
 
 
         private bool _disposed;
-        public override void Dispose()
+        public void Dispose()
         {
             if (Interlocked.Exchange(ref _disposed, true) == false)
             {

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Unispect
+namespace UnispectEx
 {
     /// <summary>
     /// Interaction logic for App.xaml

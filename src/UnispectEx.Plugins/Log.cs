@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Unispect
+namespace UnispectEx.Plugins
 {
     public static class Log
     {
@@ -67,6 +67,5 @@ namespace Unispect
 
             LogMessageAdded?.Invoke(null, new MessageAddedEventArgs(text, type));
         }
-
     }
 }

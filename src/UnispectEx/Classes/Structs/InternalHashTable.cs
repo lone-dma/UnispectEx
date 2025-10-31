@@ -1,4 +1,4 @@
-﻿namespace Unispect
+﻿namespace UnispectEx
 {
     public struct InternalHashTable //MonoInternalHashTable
     {

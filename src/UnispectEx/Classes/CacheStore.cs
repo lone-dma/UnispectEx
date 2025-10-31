@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace Unispect
+namespace UnispectEx
 {
     public static class CacheStore
     {

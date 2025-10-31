@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>warnings</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup Label="NuGet Pack">
+		<None Include="..\..\LICENSE" Pack="true" PackagePath="" Visible="false" />
+		<None Include="..\unispect.ico" Pack="true" PackagePath="" Visible="false" />
+		<None Include="README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+	<PropertyGroup Label="NuGet Properties">
+		<!-- Main Assembly Info -->
+		<PackageId>UnispectEx.Plugins</PackageId>
+		<Product>UnispectEx.Plugins</Product>
+		<AssemblyTitle>UnispectEx.Plugins</AssemblyTitle>
+		<Authors>Lone DMA, Razchek</Authors>
+		<Copyright>©2025 MIT License</Copyright>
+		<Description>Plugin SDK for UnispectEx.</Description>
+		<!-- Version -->
+		<Version>1.0.0</Version>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<FileVersion>1.0.0.0</FileVersion>
+		<!-- Properties -->
+		<PackageProjectUrl>https://github.com/lone-dma/UnispectEx</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/lone-dma/UnispectEx.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>..\unispect.ico</PackageIcon>
+		<!-- Config -->
+		<IncludeContentInPack>true</IncludeContentInPack>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<IncludeSymbols>false</IncludeSymbols>
+	</PropertyGroup>
+
+</Project>

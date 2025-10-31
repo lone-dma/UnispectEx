@@ -1,4 +1,4 @@
-﻿namespace Unispect
+﻿namespace UnispectEx
 {
     /// <summary>
     /// Represents the type of an object in managed memory.

@@ -1,7 +1,7 @@
 ﻿using System;
 using VmmSharpEx;
 
-namespace Unispect.Plugins.DMA
+namespace UnispectEx.Memory.DMA
 {
     internal static class VmmExtensions
     {
@@ -20,7 +20,7 @@ namespace Unispect.Plugins.DMA
             fixed (byte* pb = buffer)
             {
                 if (!vmm.MemRead(pid, va, pb, (uint)cb, out _))
-                    throw new Exception("Memory Read Failed!");
+                    throw new VmmException("Memory Read Failed!");
             }
             return buffer;
         }

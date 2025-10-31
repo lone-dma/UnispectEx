@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Unispect
+namespace UnispectEx
 {
     [Serializable]
     public class Settings

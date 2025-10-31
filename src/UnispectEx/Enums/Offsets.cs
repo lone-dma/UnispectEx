@@ -1,6 +1,6 @@
 ﻿// -ReSharper disable UnusedMember.Global
 // todo: move all structs into their own class files maybe
-namespace Unispect
+namespace UnispectEx
 {
     // Structures and offsets created manually with references to the module memory, IDA disassembly with pdb and:
     // https://github.com/Unity-Technologies/mono/blob/unity-2018.4-mbe
