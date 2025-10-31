@@ -1,7 +1,7 @@
 ﻿using System;
-using Unispect.Classes;
+using UnispectEx.Classes;
 
-namespace Unispect.Plugins
+namespace UnispectEx.Plugins
 {
     [UnispectPlugin]
     public sealed class MyMemoryPlugin : MemoryProxy
