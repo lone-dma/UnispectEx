@@ -24,7 +24,7 @@ jobs:
 
       - name: Dotnet Publish
         run: |
-          dotnet publish src/Unispect/Unispect.csproj \
+          dotnet publish src/UnispectEx/UnispectEx.csproj \
             -c Release \
             -r win-x64 \
             --no-self-contained \
