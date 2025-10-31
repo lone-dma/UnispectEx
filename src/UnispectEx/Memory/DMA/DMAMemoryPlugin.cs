@@ -98,15 +98,16 @@ namespace UnispectEx.Memory.DMA
             }
         }
 
-        public byte[] Read(ulong address, int length)
+        public byte[] Read(ulong address, int cb)
         {
             try
             {
-                return _vmm.MemReadCustom(_pid, address, length);
+                return _vmm.MemReadUnispect(_pid, address, cb);
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"[DMA] ERROR Reading {length} bytes at 0x{address.ToString("X")}", ex);
+                Log.Exception($"[DMA] ERROR Reading {cb} bytes at 0x{address.ToString("X")}", ex);
+                return null;
             }
         }
 

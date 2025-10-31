@@ -11,7 +11,7 @@ namespace UnispectEx
 {
     // Todo add support for il2cpp ?
     [Serializable]
-    public sealed class Inspector : Progress<float>, IDisposable
+    public sealed class Inspector : Progress<float>
     {
         private MemoryProxy _memory;
         private float _progressTotal;
@@ -336,11 +336,6 @@ namespace UnispectEx
             }
             Log.Add($"Function 'mono_get_root_domain' found. (Address: {rootDomainFunctionAddress:X16})");
             return rootDomainFunctionAddress;
-        }
-
-        public void Dispose()
-        {
-            _memory?.Dispose();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace UnispectEx.Memory.DMA
         /// <param name="cb"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static unsafe byte[] MemReadCustom(this Vmm vmm, uint pid, ulong va, int cb)
+        public static unsafe byte[] MemReadUnispect(this Vmm vmm, uint pid, ulong va, int cb)
         {
             var buffer = new byte[cb];
             fixed (byte* pb = buffer)
