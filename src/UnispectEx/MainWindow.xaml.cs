@@ -671,14 +671,7 @@ namespace UnispectEx
                         // Skip dynamic assemblies
                         if (assembly.IsDynamic)
                             continue;
-
-                        foreach (var type in assembly.GetTypes())
-                        {
-                            if (typeof(IUnispectExPlugin).IsAssignableFrom(type) && type != typeof(IUnispectExPlugin))
-                            {
-                                retList.Add(type);
-                            }
-                        }
+                        ParseAssemblyForPlugins(assembly, retList);
                     }
                     catch
                     {
@@ -698,14 +691,7 @@ namespace UnispectEx
                     try
                     {
                         var assembly = Assembly.LoadFrom(fileName);
-
-                        foreach (var type in assembly.GetTypes())
-                        {
-                            if (typeof(IUnispectExPlugin).IsAssignableFrom(type) && type != typeof(IUnispectExPlugin))
-                            {
-                                retList.Add(type);
-                            }
-                        }
+                        ParseAssemblyForPlugins(assembly, retList);
                     }
                     catch (ReflectionTypeLoadException ex)
                     {
@@ -722,6 +708,26 @@ namespace UnispectEx
                 Log.Exception($"Error loading plugins", ex);
             }
             return retList;
+        }
+
+        /// <summary>
+        /// Helper to parse an assembly for <see cref="IUnispectExPlugin"/> types.
+        /// </summary>
+        /// <param name="asm"></param>
+        /// <param name="results"></param>
+        private static void ParseAssemblyForPlugins(Assembly asm, ICollection<Type> results)
+        {
+            foreach (var type in asm.GetTypes())
+            {
+                if (!type.IsPublic || type.DeclaringType != null) // skip non-public and nested types
+                    continue;
+                if (type.IsAbstract || type.IsInterface) // concrete types only
+                    continue;
+                if (typeof(IUnispectExPlugin).IsAssignableFrom(type))
+                {
+                    results.Add(type);
+                }
+            }
         }
 
         public class OffsetChainInfo
