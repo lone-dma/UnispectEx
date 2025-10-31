@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.Versioning;
 using System.Threading;
 using UnispectEx.Plugins;
@@ -20,17 +21,20 @@ namespace UnispectEx.Memory.DMA
             try
             {
                 Log.Add("[DMA] Plugin Starting...");
+                bool mmap = false;
+                string[] args = ["-device", "FPGA", "-norefresh", "-waitinitialize"];
                 if (File.Exists(MemMapPath))
                 {
-                    Log.Add("[DMA] Memory Map Found!");
-                    _vmm = new Vmm("-device", "FPGA", "-memmap", MemMapPath, "-waitinitialize")
+                    args = args.Concat(["-memmap", MemMapPath]).ToArray();
+                    _vmm = new Vmm(args)
                     {
                         EnableMemoryWriting = false
                     };
+                    mmap = true;
                 }
                 else
                 {
-                    _vmm = new Vmm("-device", "FPGA", "-waitinitialize")
+                    _vmm = new Vmm(args)
                     {
                         EnableMemoryWriting = false
                     };
@@ -39,11 +43,17 @@ namespace UnispectEx.Memory.DMA
                         _vmm.GetMemoryMap(
                             applyMap: true, 
                             outputFile: MemMapPath);
+                        mmap = true;
+                        
                     }
-                    catch
+                    catch // Best effort memory map
                     {
-                        // Best effort memory map
+                        Log.Warn("[DMA] Failed to parse Memory Map. Will proceed without map.");
                     }
+                }
+                if (mmap)
+                {
+                    Log.Add("[DMA] Memory Map Loaded!");
                 }
                 Log.Add("[DMA] Plugin Loaded!");
             }
