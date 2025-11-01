@@ -59,7 +59,8 @@ namespace UnispectEx.Memory.DMA
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("[DMA] ERROR Initializing FPGA", ex);
+                Log.Exception("[DMA] ERROR Initializing FPGA", ex);
+                throw;
             }
         }
 
@@ -75,7 +76,8 @@ namespace UnispectEx.Memory.DMA
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"[DMA] ERROR retrieving module '{moduleName}'", ex);
+                Log.Exception($"[DMA] ERROR retrieving module '{moduleName}'", ex);
+                return null;
             }
         }
 
@@ -94,7 +96,8 @@ namespace UnispectEx.Memory.DMA
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"[DMA] ERROR attaching to process '{handle}'", ex);
+                Log.Exception($"[DMA] ERROR attaching to process '{handle}'", ex);
+                return false;
             }
         }
 

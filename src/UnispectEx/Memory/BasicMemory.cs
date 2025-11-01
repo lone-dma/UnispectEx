@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using UnispectEx.Plugins;
 
@@ -34,18 +35,16 @@ namespace UnispectEx.Memory
             var procList = Process.GetProcessesByName(handle);
 
             if (procList.Length == 0)
-                throw new InvalidOperationException("Process not found.");
+                return false;
 
             _process = procList[0];
             _handle = OpenProcess(ProcessVmAll, false, _process.Id);
 
-            return true;
+            return _handle != IntPtr.Zero;
         }
 
-        public byte[] Read(ulong address, int cb)
-        {
-            return RPM(address, cb);
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public byte[] Read(ulong address, int cb) => RPM(address, cb);
 
         private byte[] RPM(ulong address, int cb)
         {
