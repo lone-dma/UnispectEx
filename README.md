@@ -103,13 +103,8 @@ Planned features (these aren't definite, but likely):
     [34] vector2_0x34 : UnityEngine.Vector2
 ```
 
-# Plugins
-
-  - Start a new Class Library (.NET Framework) project and replace your starting code with the code from [MemoryPluginTemplate.cs]
-  - Add a reference to Unispect.exe (Project > Add Reference... > Browse)
-  - Change your Build Platform target to x64
-  - Edit the code to your hearts content
-  - Compile the class library and place the .dll into Unispect's plugins folder (Unispect\Plugins\)
-  - Open Unispect and click "Load Plugin". Look for your class name and then select it by clicking on it.
+# Plugins (v2)
+- Plugins were revamped in UnispectEx to be easier to develop! You can now reference a Nuget Package in your separate Plugin Project.
+- See the [Plugins README](https://github.com/lone-dma/UnispectEx/blob/master/src/UnispectEx.Plugins/README.md) for details.
   
 ![Screenshot1](Gallery/screenshot3.png?raw=true)
