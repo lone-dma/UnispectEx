@@ -201,17 +201,6 @@ namespace UnispectEx
             return sb.ToString();
         }
 
-        private bool ShouldAddParentType(FieldDefWrapper newField)
-        {
-            foreach (var f in Fields)
-            {
-                if (f.Name == newField.Name && f.FieldType == newField.FieldType)
-                    return false;
-            }
-
-            return true;
-        }
-
         public void FixHierarchy(List<TypeDefWrapper> defs)
         {
             if (Parent == null)
@@ -233,6 +222,17 @@ namespace UnispectEx
 
                     break;
                 }
+            }
+
+            bool ShouldAddParentType(FieldDefWrapper newField)
+            {
+                foreach (var f in Fields)
+                {
+                    if (f.Name == newField.Name && f.FieldType == newField.FieldType)
+                        return false;
+                }
+
+                return true;
             }
         }
         #endregion

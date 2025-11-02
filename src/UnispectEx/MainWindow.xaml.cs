@@ -635,7 +635,7 @@ namespace UnispectEx
 
             cm.Items.RemoveAt(0);
 
-            foreach (var p in pluginList)
+            foreach (var p in pluginList!)
             {
                 var mi = new MenuItem();
                 mi.Click += (o, args) =>
