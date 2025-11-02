@@ -8,7 +8,7 @@
         xmlns:unispect="clr-namespace:UnispectEx"
         x:Class="UnispectEx.MainWindow"
         mc:Ignorable="d"
-        Title="Unispect - Mono Type Dumper" Height="350" Width="800" ResizeMode="CanMinimize" 
+        Title="UnispectEx - Mono Type Dumper" Height="350" Width="800" ResizeMode="CanMinimize" 
         Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
     <mah:MetroWindow.Resources>
         <Style x:Key="TransparentStyle" TargetType="{x:Type Button}">

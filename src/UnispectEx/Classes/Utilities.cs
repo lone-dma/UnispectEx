@@ -16,9 +16,9 @@ using System.Windows.Media.Animation;
 
 namespace UnispectEx
 {
-    public static class Utilities
+    public static partial class Utilities
     {
-        private static readonly Dictionary<ulong, string> UnknownClassNameCache = new Dictionary<ulong, string>();
+        private static readonly Dictionary<ulong, string> UnknownClassNameCache = new();
 
         private static Dictionary<string, int> _prefixIndexer;
 
@@ -157,24 +157,25 @@ namespace UnispectEx
         {
             get
             {
-                return Assembly.GetEntryAssembly().GetName().Version.ToString();
+                return Assembly.GetEntryAssembly()!.GetName()!.Version!.ToString();
             }
         }
 
-        public static string GithubLink => "http://www.github.com/Razchek/Unispect";
+        public static string GithubLink => "https://github.com/lone-dma/UnispectEx";
 
-        [DllImport("user32.dll")]
-        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
+        [LibraryImport("user32.dll")]
+        private static partial IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
 
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+        [LibraryImport("user32.dll")]
+        private static partial IntPtr GetSystemMenu(IntPtr hWnd, [MarshalAs(UnmanagedType.Bool)] bool bRevert);
 
-        [DllImport("user32.dll")]
-        private static extern int TrackPopupMenu(IntPtr hMenu, uint uFlags, int x, int y,
+        [LibraryImport("user32.dll")]
+        private static partial int TrackPopupMenu(IntPtr hMenu, uint uFlags, int x, int y,
             int nReserved, IntPtr hWnd, IntPtr prcRect);
 
-        [DllImport("user32.dll")]
-        private static extern bool GetWindowRect(IntPtr hWnd, out IntRect rect);
+        [LibraryImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool GetWindowRect(IntPtr hWnd, out IntRect rect);
 
         public struct IntRect
         {

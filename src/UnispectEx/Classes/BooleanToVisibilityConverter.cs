@@ -12,7 +12,9 @@ namespace UnispectEx
             var invert = false;
 
             if (parameter != null)
-                invert = bool.Parse(parameter.ToString());
+            {
+                invert = bool.Parse(parameter.ToString()!);
+            }
 
             var booleanValue = value != null && (bool)value;
 
