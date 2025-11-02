@@ -197,7 +197,7 @@ namespace UnispectEx
             try
             {
                 Mouse.OverrideCursor = Cursors.AppStarting;
-                Process.Start(url);
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
             }
             catch (Exception ex)
             {
