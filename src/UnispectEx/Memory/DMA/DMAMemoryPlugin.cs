@@ -60,6 +60,7 @@ namespace UnispectEx.Memory.DMA
             catch (Exception ex)
             {
                 Log.Exception("[DMA] ERROR Initializing FPGA", ex);
+                Dispose();
                 throw;
             }
         }

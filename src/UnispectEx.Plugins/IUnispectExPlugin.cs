@@ -5,6 +5,9 @@ namespace UnispectEx.Plugins
     /// <summary>
     /// Defines the interface for UnispectEx plugins.
     /// </summary>
+    /// <remarks>
+    /// Must be a public type and contain a parameterless constructor.
+    /// </remarks>
     public interface IUnispectExPlugin : IDisposable
     {
         /// <summary>
