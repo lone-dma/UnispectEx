@@ -1,45 +1,87 @@
-name: Deploy latest version to Github Releases
+name: Deploy to GitHub Releases
 
 on:
   push:
     branches:
       - master
+    paths:
+      - 'src/UnispectEx/**'
+  workflow_dispatch:
 
 permissions:
   contents: write
+  
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
+    name: Build & Deploy
+    runs-on: windows-latest
     environment: production
-    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
-      - name: Setup .NET 9 SDK
+      - name: Get version info
+        uses: dotnet/nbgv@master
+        id: nbgv
+
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: "9.0.x"
+          dotnet-version: |
+            8.0.x
+            9.0.x
+
+      - name: Install Velopack CLI
+        run: |
+          dotnet tool install -g vpk
 
       - name: Dotnet Publish
         run: |
-          dotnet publish src/UnispectEx/UnispectEx.csproj \
-            -c Release \
-            -r win-x64 \
-            --no-self-contained \
-            /p:PublishSingleFile=true \
-            /p:DebugType=none \
-            /p:EnableWindowsTargeting=true \
+          dotnet publish src/UnispectEx/UnispectEx.csproj `
+            -c Release `
+            -r win-x64 `
+            --no-self-contained `
+            /p:PublishSingleFile=true `
+            /p:DebugType=none `
+            /p:EnableWindowsTargeting=true `
+            /p:Version=${{ steps.nbgv.outputs.SemVer2 }} `
+            /p:FileVersion=${{ steps.nbgv.outputs.AssemblyFileVersion }} `
+            /p:AssemblyVersion=${{ steps.nbgv.outputs.AssemblyVersion }} `
             -o out
 
-      - name: Archive publish output
-        run: |
-          cd out
-          zip -r ../UnispectEx.zip .
-
-      - name: Upload to "latest" release (overwrite old asset)
+      - name: Download previous release data
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release upload latest UnispectEx.zip --clobber
+          vpk download github `
+            --repoUrl "https://github.com/${{ github.repository }}" `
+            --token "$env:GITHUB_TOKEN"
+
+      - name: Pack with Velopack
+        run: |
+          vpk pack `
+            --packId github.lonedma.unispectex `
+            --packVersion "${{ steps.nbgv.outputs.SemVer2 }}" `
+            --packDir "out" `
+            --mainExe "UnispectEx.exe" `
+            --packTitle "UnispectEx" `
+            --icon "src/unispect.ico"
+
+      - name: Upload to GitHub Releases
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          vpk upload github `
+            --repoUrl "https://github.com/${{ github.repository }}" `
+            --publish `
+            --releaseName "UnispectEx ${{ steps.nbgv.outputs.SemVer2 }}" `
+            --tag "v${{ steps.nbgv.outputs.SemVer2 }}" `
+            --targetCommitish "${{ github.sha }}" `
+            --token "$env:GITHUB_TOKEN"

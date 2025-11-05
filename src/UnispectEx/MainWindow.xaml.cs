@@ -18,6 +18,8 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using UnispectEx.Memory;
 using UnispectEx.Plugins;
+using Velopack;
+using Velopack.Sources;
 using MenuItem = System.Windows.Controls.MenuItem;
 
 
@@ -46,6 +48,46 @@ namespace UnispectEx
             Closing += MainWindow_Closing;
         }
 
+        private static async Task CheckForUpdatesAsync(Window parent)
+        {
+            try
+            {
+                var updater = new UpdateManager(
+                    source: new GithubSource("https://github.com/lone-dma/UnispectEx",
+                        accessToken: null,
+                        prerelease: false));
+                if (!updater.IsInstalled)
+                    return;
+
+                var newVersion = await updater.CheckForUpdatesAsync();
+                if (newVersion is not null)
+                {
+                    var result = MessageBox.Show(
+                        parent,
+                        $"A new version ({newVersion.TargetFullRelease.Version}) is available.\n\nWould you like to update now?",
+                        "UnispectEx",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        await updater.DownloadUpdatesAsync(newVersion);
+                        updater.ApplyUpdatesAndRestart(newVersion);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    parent,
+                    $"An unhandled exception occurred while checking for updates: {ex}",
+                    "UnispectEx",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+            }
+
+        }
+
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             SaveSettings();
@@ -53,6 +95,7 @@ namespace UnispectEx
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            _ = CheckForUpdatesAsync(this);
             Log.LogMessageAdded += (o, args) =>
             {
                 TxLog.Dispatcher.Invoke(() =>
