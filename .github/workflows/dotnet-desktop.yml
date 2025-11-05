@@ -50,7 +50,6 @@ jobs:
             --no-self-contained `
             /p:PublishSingleFile=true `
             /p:DebugType=none `
-            /p:EnableWindowsTargeting=true `
             /p:Version=${{ steps.nbgv.outputs.SemVer2 }} `
             /p:FileVersion=${{ steps.nbgv.outputs.AssemblyFileVersion }} `
             /p:AssemblyVersion=${{ steps.nbgv.outputs.AssemblyVersion }} `

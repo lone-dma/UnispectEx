@@ -85,7 +85,6 @@ namespace UnispectEx
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
             }
-
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
