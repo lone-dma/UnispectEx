@@ -30,11 +30,11 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <PackageReference Include="ControlzEx" Version="4.3.1" />
-    <PackageReference Include="MahApps.Metro" Version="2.1.1" />
-    <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.3.0" />
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
-    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="9.0.8" />
+    <PackageReference Include="ControlzEx" Version="7.0.2" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.11" />
+    <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="6.2.1" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="9.0.10" />
     <PackageReference Include="Velopack" Version="0.0.1298" />
     <PackageReference Include="VmmSharpEx" Version="3.90.9" />
   </ItemGroup>
