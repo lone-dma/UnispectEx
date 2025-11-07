@@ -106,7 +106,7 @@ namespace UnispectEx.Memory.DMA
         {
             try
             {
-                return _vmm.MemReadUnispect(_pid, address, cb);
+                return _vmm.MemRead(_pid, address, (uint)cb, out _);
             }
             catch (Exception ex)
             {

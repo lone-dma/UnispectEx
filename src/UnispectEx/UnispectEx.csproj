@@ -36,7 +36,7 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="9.0.8" />
     <PackageReference Include="Velopack" Version="0.0.1298" />
-    <PackageReference Include="VmmSharpEx" Version="3.90.5" />
+    <PackageReference Include="VmmSharpEx" Version="3.90.9" />
   </ItemGroup>
 	
   <ItemGroup>
